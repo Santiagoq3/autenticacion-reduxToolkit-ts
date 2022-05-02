@@ -10,16 +10,28 @@ import {
   selectCount,
 } from './counterSlice';
 import styles from './Counter.module.css';
+import { selectAuth, startLogout } from '../auth/authSlice';
 
 export function Counter() {
   const count = useAppSelector(selectCount);
   const dispatch = useAppDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
-
+  const {checking,name} = useAppSelector(selectAuth)
   const incrementValue = Number(incrementAmount) || 0;
 
+  const handleLogout = ()=>{
+    dispatch(startLogout())
+  }
   return (
     <div>
+      <button onClick={handleLogout}>
+        Logout
+      </button>
+      <h1>
+        {
+          checking ? " no autenticando" : name
+        }
+      </h1>
       <div className={styles.row}>
         <button
           className={styles.button}
